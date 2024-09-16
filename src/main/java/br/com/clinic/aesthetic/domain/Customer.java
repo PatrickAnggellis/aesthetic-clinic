@@ -1,9 +1,16 @@
 package br.com.clinic.aesthetic.domain;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+import javax.annotation.processing.Generated;
 import java.time.LocalDate;
 
 public class Customer {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String cpf;
@@ -15,9 +22,8 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(Long id, String name, String cpf, String address, LocalDate birthdayDate, String email,
-            String phone) {
-        Id = id;
+    public Customer(Long id, String name, String cpf, String address, LocalDate birthdayDate, String email, String phone) {
+        this.id = id;
         this.name = name;
         this.cpf = cpf;
         this.address = address;
@@ -27,7 +33,7 @@ public class Customer {
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public String getName() {
@@ -55,7 +61,7 @@ public class Customer {
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public void setName(String name) {

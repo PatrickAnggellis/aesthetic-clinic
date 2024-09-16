@@ -24,7 +24,7 @@ public class CustomerService implements CustomerUseCase {
     }
 
     @Override
-    public Optional<Customer> searchCustomer(Long id) {
+    public Optional<Customer> findCustomer(Long id) {
         return customerRepository.findById(id);
     }
 
