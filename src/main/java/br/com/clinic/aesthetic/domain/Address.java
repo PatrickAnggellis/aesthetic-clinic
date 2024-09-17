@@ -1,27 +1,30 @@
 package br.com.clinic.aesthetic.domain;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 @Entity
 public class Address {
 
+    @Id
+    private Long id;
     private String cep;
     private String logradouro;
     private String bairro;
     private String localidade;
     private String estado;
-    private String complemente;
+    private String complemento;
 
     public Address() {
     }
 
-    public Address(String cep, String logradouro, String bairro, String localidade, String estado, String complemente) {
+    public Address(String cep, String logradouro, String bairro, String localidade, String estado, String complemento) {
         this.cep = cep;
         this.logradouro = logradouro;
         this.bairro = bairro;
         this.localidade = localidade;
         this.estado = estado;
-        this.complemente = complemente;
+        this.complemento = complemento;
     }
 
     public String getCep() {
@@ -64,11 +67,11 @@ public class Address {
         this.estado = estado;
     }
 
-    public String getComplemente() {
-        return complemente;
+    public String getComplemento() {
+        return complemento;
     }
 
-    public void setComplemente(String complemente) {
-        this.complemente = complemente;
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
     }
 }
