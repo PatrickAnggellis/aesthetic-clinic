@@ -3,6 +3,8 @@ package br.com.clinic.aesthetic.domain;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 import javax.annotation.processing.Generated;
 import java.time.LocalDate;
@@ -12,7 +14,10 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "Name is mandatory.")
     private String name;
+    @NotBlank(message = "CPF is mandatory.")
+    @Pattern(regexp = "\\d{11}", message = "CPF must contain 11 digits")
     private String cpf;
     private String address;
     private LocalDate birthdayDate;
