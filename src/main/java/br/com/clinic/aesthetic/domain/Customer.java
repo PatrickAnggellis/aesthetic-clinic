@@ -1,14 +1,12 @@
 package br.com.clinic.aesthetic.domain;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
-import javax.annotation.processing.Generated;
 import java.time.LocalDate;
 
+@Entity
 public class Customer {
 
     @Id
@@ -19,22 +17,23 @@ public class Customer {
     @NotBlank(message = "CPF is mandatory.")
     @Pattern(regexp = "\\d{11}", message = "CPF must contain 11 digits")
     private String cpf;
-    private String address;
     private LocalDate birthdayDate;
     private String email;
     private String phone;
+    @Embedded
+    private Address address;
 
     public Customer() {
     }
 
-    public Customer(Long id, String name, String cpf, String address, LocalDate birthdayDate, String email, String phone) {
+    public Customer(Long id, String name, String cpf, LocalDate birthdayDate, String email, String phone, Address address) {
         this.id = id;
         this.name = name;
         this.cpf = cpf;
-        this.address = address;
         this.birthdayDate = birthdayDate;
         this.email = email;
         this.phone = phone;
+        this.address = address;
     }
 
     public Long getId() {
@@ -49,7 +48,7 @@ public class Customer {
         return cpf;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 
@@ -77,7 +76,7 @@ public class Customer {
         this.cpf = cpf;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 

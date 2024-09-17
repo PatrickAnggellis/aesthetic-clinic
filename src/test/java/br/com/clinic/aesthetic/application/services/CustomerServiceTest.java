@@ -26,7 +26,7 @@ class CustomerServiceTest {
     @BeforeEach
     void setup(){
         MockitoAnnotations.openMocks(this);
-        customerService = new CustomerService(customerRepository);
+        customerService = new CustomerService(customerRepository, addressApiPort);
     }
 
     @Test

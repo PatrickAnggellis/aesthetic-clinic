@@ -2,6 +2,8 @@ package br.com.clinic.aesthetic.infrastructure.adapters.input;
 
 import java.util.List;
 
+import br.com.clinic.aesthetic.application.ports.output.AddressNotFoundException;
+import br.com.clinic.aesthetic.application.ports.output.ApiException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,7 +45,7 @@ public class CustomerController {
     }
 
     @PostMapping
-    public Customer createCustomer(@RequestBody Customer customer) {
+    public Customer createCustomer(@RequestBody Customer customer) throws AddressNotFoundException, ApiException {
         return customerUseCase.createCustomer(customer);
     }
 
