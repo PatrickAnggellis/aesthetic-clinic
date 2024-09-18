@@ -3,6 +3,10 @@ package br.com.clinic.aesthetic.application.services;
 import java.util.List;
 import java.util.Optional;
 
+import br.com.clinic.aesthetic.application.ports.output.AddressApiPort;
+import br.com.clinic.aesthetic.application.ports.output.AddressNotFoundException;
+import br.com.clinic.aesthetic.application.ports.output.ApiException;
+import br.com.clinic.aesthetic.domain.Address;
 import org.springframework.stereotype.Service;
 
 import br.com.clinic.aesthetic.application.ports.input.CustomerUseCase;
@@ -13,9 +17,11 @@ import br.com.clinic.aesthetic.domain.Customer;
 public class CustomerService implements CustomerUseCase {
 
     private final CustomerRepository customerRepository;
+    private final AddressApiPort addressApiPort;
 
-    public CustomerService(CustomerRepository customerRepository) {
+    public CustomerService(CustomerRepository customerRepository, AddressApiPort addressApiPort) {
         this.customerRepository = customerRepository;
+        this.addressApiPort = addressApiPort;
     }
 
     @Override
@@ -24,13 +30,18 @@ public class CustomerService implements CustomerUseCase {
     }
 
     @Override
-    public Optional<Customer> searchCustomer(Long id) {
+    public Optional<Customer> findCustomer(Long id) {
         return customerRepository.findById(id);
     }
 
     @Override
-    public Customer createCustomer(Customer customer) {
-       return customerRepository.save(customer);
+    public Customer createCustomer(Customer customer) throws AddressNotFoundException, ApiException {
+
+        //Chama a Api de endereço e preenche os campo de endereço.
+        Address address = addressApiPort.findAddressByZipCode(customer.getAddress().getCep());
+        customer.setAddress(address);
+
+        return customerRepository.save(customer);
     }
 
     @Override
