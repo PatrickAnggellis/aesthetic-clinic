@@ -3,7 +3,9 @@ package br.com.clinic.aesthetic.infrastructure.adapters.output;
 import br.com.clinic.aesthetic.application.ports.output.UserRepository;
 import br.com.clinic.aesthetic.domain.User;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +21,13 @@ public class UserJpaAdapter implements UserRepository {
 
     @Override
     public Optional<User> findByEmail(String email) {
-        return Optional.ofNullable(entityManager.find(User.class, email));
+        try{
+            TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u WHERE u.email = :email", User.class);
+            query.setParameter("email", email);
+            return Optional.ofNullable(query.getSingleResult());
+        } catch(NoResultException e) {
+            return Optional.empty();
+        }
     }
 
     @Override

@@ -12,12 +12,13 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class AppConfig {
 
-    @Value("${app.admin.email")
+    @Value("${app.admin.email}")
     private String adminEmail;
 
-    @Value("${app.admin.password")
+    @Value("${app.admin.password}")
     private String adminPassword;
 
+    @Bean
     CommandLineRunner initDatabase(UserUseCase userUseCase, BCryptPasswordEncoder passwordEncoder){
         return args -> {
             if (userUseCase.findUserByEmail(adminEmail).isEmpty()){
@@ -26,7 +27,10 @@ public class AppConfig {
                 admin.setEmail(adminEmail);
                 admin.setPassword(passwordEncoder.encode(adminPassword));
                 userUseCase.createUser(admin);
+                System.out.println("Admin user created successfully.");
 
+            } else {
+                System.out.println("Admin user already exists.");
             }
         };
     }
