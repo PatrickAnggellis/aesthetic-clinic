@@ -24,14 +24,27 @@ public class User {
     @Size(min = 6)
     private String password;
 
-    public User() {
-    }
+    @NotBlank
+    private String role;
 
-    public User(Long id, String name, String email, String password) {
+    public User(Long id, String name, String email, String password, String role) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
+        this.role = role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public User() {
+
     }
 
     public void setId(Long id) {

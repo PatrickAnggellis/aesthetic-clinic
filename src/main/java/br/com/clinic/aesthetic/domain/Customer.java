@@ -1,6 +1,7 @@
 package br.com.clinic.aesthetic.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
@@ -18,6 +19,9 @@ public class Customer {
     @Pattern(regexp = "\\d{11}", message = "CPF must contain 11 digits")
     private String cpf;
     private LocalDate birthdayDate;
+
+    @NotBlank(message = "O email não pode estar vazio")
+    @Email
     private String email;
     private String phone;
     @Embedded

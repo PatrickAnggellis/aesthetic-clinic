@@ -4,13 +4,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableWebSecurity
+//@EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
@@ -19,11 +17,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
                         .requestMatchers( "/h2-console/**").permitAll()
-                        .requestMatchers("/api/users/*").hasRole("USER")
-                        .requestMatchers("/api/admin/*").hasRole("ADMIN")
+                        .requestMatchers("/api/**", "/opencep.com/v1/**").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
-                .csrf(csrf->csrf.ignoringRequestMatchers("/h2-console/**"))
+                .csrf(csrf->csrf.ignoringRequestMatchers("/h2-console/**", "/api/**"))
                 .headers(headers-> headers.frameOptions(frameOptionsConfig -> frameOptionsConfig.sameOrigin()));
         return httpSecurity.build();
     }

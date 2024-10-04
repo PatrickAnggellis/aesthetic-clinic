@@ -7,6 +7,7 @@ import br.com.clinic.aesthetic.application.ports.output.AddressApiPort;
 import br.com.clinic.aesthetic.application.ports.output.AddressNotFoundException;
 import br.com.clinic.aesthetic.application.ports.output.ApiException;
 import br.com.clinic.aesthetic.domain.Address;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.clinic.aesthetic.application.ports.input.CustomerUseCase;
@@ -19,6 +20,7 @@ public class CustomerService implements CustomerUseCase {
     private final CustomerRepository customerRepository;
     private final AddressApiPort addressApiPort;
 
+    @Autowired
     public CustomerService(CustomerRepository customerRepository, AddressApiPort addressApiPort) {
         this.customerRepository = customerRepository;
         this.addressApiPort = addressApiPort;

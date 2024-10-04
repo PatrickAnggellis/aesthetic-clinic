@@ -4,16 +4,20 @@ import br.com.clinic.aesthetic.application.ports.output.AddressApiPort;
 import br.com.clinic.aesthetic.application.ports.output.AddressNotFoundException;
 import br.com.clinic.aesthetic.application.ports.output.ApiException;
 import br.com.clinic.aesthetic.domain.Address;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 @Component
+@Transactional
 public class AddressApiAdapter implements AddressApiPort {
 
     private final RestTemplate restTemplate;
     private final String apiUrl = "https://opencep.com/v1/";
 
+    @Autowired
     public AddressApiAdapter(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
